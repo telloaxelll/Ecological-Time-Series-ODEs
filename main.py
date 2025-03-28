@@ -1,8 +1,9 @@
 """" 
-Author: AXEL MUNIZ TELLO, 
+Author: AXEL MUNIZ TELLO, LEANDRO OUVERNY, RYAN HSIAO
 Date: 03/25/2025
 Description: This script will be used to simulate the population dynamics of bobcats and rabbits using the Lotka-Volterra model
              for the applied mathematics challenge at UC Merced (2025)
+Note: Please refer to the README.md file for more information on the project and the workings of the code.
 """
 # Imported Libraries: 
 import numpy as np
@@ -12,11 +13,17 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
 
-# Save Plots in Directory: 
 if not os.path.exists('plots'):
     os.makedirs('plots')
     
-# Bobcat & Rabbit Datasets (Loaded):
+
+def predator_prey (t, z, a, b, c, d):
+    x,y = z
+    dxdt = a*x - b*x*y
+    dydt = d*x*y - c*y
+    return [dxdt, dydt]
+    
+# Loaded Data for Bobcat and Rabbit Populations:
 bobcat_data = pd.read_csv('data/bobcatData.csv')
 rabbit_data = pd.read_csv('data/rabbitData.csv')
 
@@ -24,16 +31,14 @@ rabbit_data = pd.read_csv('data/rabbitData.csv')
 rabbit_data.columns = ['Day', 'Rabbits']
 bobcat_data.columns = ['Day', 'Bobcats']
 
-# Extract Data:
+# Extract Data from Columns:
 t_rabbit = rabbit_data['Day'].values
-x_values = rabbit_data['Rabbits'].values
-
 t_bobcat = bobcat_data['Day'].values
+x_values = rabbit_data['Rabbits'].values
 y_values = bobcat_data['Bobcats'].values
 
-##---INITIAL POPULATION PLOTS---## 
 # Plot for Rabbit Population Over Time:
-rabbit_data.plot(x='Day', y='Rabbits', kind='scatter') 
+rabbit_data.plot(s=5, x='Day', y='Rabbits', kind='scatter') 
 plt.title('Rabbit Population Over Time') 
 plt.xlabel('Day')
 plt.ylabel('Population')
@@ -41,24 +46,39 @@ plt.savefig('plots/rabbit_population_plot.png')
 plt.show()
 
 # Plot for Bobcat Population Over Time:
-bobcat_data.plot(x='Day', y='Bobcats', kind='scatter')  
+bobcat_data.plot(s = 5, x='Day', y='Bobcats', kind='scatter')  
 plt.title('Bobcat Population Over Time')
 plt.xlabel('Day')
 plt.ylabel('Population')
 plt.savefig('plots/bobcat_population_plot.png') 
 plt.show()
-##-------------------------------##
 
-##--INTERPOLATED DATA --## 
-t_full = np.arrange(0, 90)
-interp_x = interp1d(t_rabbit, x_values, kind='cubic', fill_value='extrapolate')
-interp_y = interp1d(t_bobcat, y_values, kind='cubic', fill_value='extrapolate')
+######-BEGINNING OF METHOD-######
+"""
+In order to be able to solve these ODEs we we are going to need more data points. However, we 
+are going to need to interpolate the data points we currently have in order to get more data points
+that we can work with. 
+"""
+# Interpolation:
+# Create a common time grid (ex) 90 days evenly spaced)
+t_min = max(t_rabbit.min(), t_bobcat.min())
+t_max = min(t_rabbit.max(), t_bobcat.max())
+t_common = np.linspace(t_min, t_max, 200)
 
-x_interp = interp_x(t_full)
-y_interp = interp_y(t_full) 
+# Interpolate both datasets onto common time grid
+interp_rabbit = interp1d(t_rabbit, x_values, kind='linear', fill_value='extrapolate')
+interp_bobcat = interp1d(t_bobcat, y_values, kind='linear', fill_value='extrapolate')
 
-##--ESTIMATED DERIVATIVES--##
-dxdt = np.gradient(x_interp, t_full)
-dydt = np.gradient(y_interp, t_full)
+x_interp = interp_rabbit(t_common)
+y_interp = interp_bobcat(t_common)
 
-A1 = np.column_stack()
+# Plot for Interpolated Rabbit Population:
+plt.plot(t_common, x_interp, label='Interpolated Rabbits')
+plt.plot(t_common, y_interp, label='Interpolated Bobcats')
+plt.title("Interpolated Populations")
+plt.xlabel("Day")
+plt.ylabel("Population")
+plt.legend()
+plt.grid(True)
+plt.savefig("plots/interpolated_data.png")
+plt.show()
