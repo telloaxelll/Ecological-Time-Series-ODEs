@@ -1,17 +1,62 @@
-# Introduction: 
-The program that is provided in this repository serves as a guidance for the Applied Mathematics Challenge at
-University of California, Merced. 
+# 🐾 Applied Mathematics Challenge 2025 — Predator-Prey Modeling
 
-## Background: 
-The Department of Wildlife would like to know how many Bobcats there are in Merced county over the next 90 days. 
-They are elusive creatures but you have been tasked with the monumental task of coming up with an accurate estimate of their
-population based on observed sightings of Bobcat and Cottontail rabbits, their favorite food. 
-If there are too many Bobcats (exceeding >200 in the area), then certain wildlife control may be needed... 
+## 📍 Overview
 
-## Mathematical Challenge: 
-Come up with a model for the population of bobcats and rabbits in time using the observed time 
-series data and predict their populations over the next 90 days!
+This project was created for the **Applied Mathematics Challenge 2025** at the University of California, Merced. It tackles an ecological modeling problem posed by the Department of Wildlife: **predicting the bobcat population over the next 90 days** based on observed sightings of bobcats and their primary prey — cottontail rabbits.
 
-# Problem Setup: 
-In order to tackle this problem, our team has gone ahead and deviced a plan to implement the Lotka-Volterra predator-prey system utilizing ODEs to simulate and predict populations based off the datasets for both rabbit and bobcat populations. 
-1. The Lotka-Volterra predator-prey system models two different species that are related to each other and establishes ODEs for the growth in population over time that depicts the rate of increase or decreate in order to model species. 
+The modeling is performed using a **Lotka-Volterra predator-prey system**, implemented as a system of ODEs. We use real data, interpolation, parameter estimation via optimization, and simulate future dynamics to determine whether **wildlife control measures** may be necessary.
+
+---
+
+## 🔬 Background
+
+Bobcats are elusive creatures, and it's difficult to track their population accurately through direct observation. However, by analyzing the population trends of both bobcats and cottontail rabbits (their primary prey), we can estimate how their interactions impact population dynamics.
+
+### 🐾 Challenge Objective:
+> Predict the bobcat population for the next **90 days** based on sparse observational data.  
+> If the population is projected to exceed **200**, wildlife control may be required.
+
+---
+
+## 📈 Mathematical Model
+
+We used the **Lotka-Volterra equations**, a classic predator-prey system:
+
+\[
+\\
+\\frac{dx}{dt} = ax - bxy \\\\
+\\frac{dy}{dt} = dxy - cy
+\\
+\]
+
+Where:
+- \( x(t) \): Rabbit population at time \( t \)
+- \( y(t) \): Bobcat population at time \( t \)
+- \( a \): Natural growth rate of rabbits
+- \( b \): Predation rate of bobcats on rabbits
+- \( c \): Natural death rate of bobcats
+- \( d \): Growth rate of bobcats per rabbit consumed
+
+---
+
+## 🧮 Methodology
+
+1. **Data Preprocessing**
+   - Load observed sightings of rabbits and bobcats
+   - Interpolate the data onto a common time grid
+   - Normalize both datasets to eliminate scale bias
+
+2. **Model Fitting**
+   - Use `scipy.optimize.minimize` to fit Lotka-Volterra parameters via least-squares (MSE)
+   - Simulate the system using `scipy.integrate.solve_ivp`
+
+3. **Prediction**
+   - Simulate 90 days into the future
+   - Determine whether the bobcat population exceeds the threshold of 200
+
+4. **Visualization**
+   - Generate plots for original data, interpolated data, and population forecasts
+
+---
+
+## 📁 Project Structure
