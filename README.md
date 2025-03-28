@@ -22,8 +22,7 @@ Bobcats are elusive creatures, and it's difficult to track their population accu
 
 We used the **Lotka-Volterra equations**, a classic predator-prey system [Link](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations):
 
-dx/dt = ax - bxy
-dy/dt = dxy - cy
+dx/dt = ax - bxy, dy/dt = dxy - cy
 
 Where:
 - \( x(t) \): Rabbit population at time \( t \)
@@ -55,16 +54,17 @@ Where:
 
 ## Visualizations: 
 
-### 🐇 Rabbit Population Over Time
+### Rabbit Population Over Time
 ![Rabbit Population](plots/rabbit_population_plot.png)
 
-### 🐾 Bobcat Population Over Time
+### Bobcat Population Over Time
 ![Bobcat Population](plots/bobcat_population_plot.png)
 
-### 📈 Normalized Interpolated Populations
+### Normalized Interpolated Populations
 ![Interpolated Data](plots/interpolated_data.png)
 
-### 🔮 Predicted Populations (180-Day Forecast)
+### Predicted Populations (180-Day Forecast)
 ![Full Prediction](plots/full_prediction.png)
 
 ---
+
