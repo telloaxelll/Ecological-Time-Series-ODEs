@@ -1,6 +1,6 @@
-# 🐾 Applied Mathematics Challenge 2025 — Predator-Prey Modeling
+# Modeling Ecologolical Time Series Population Using ODEs
 
-## 📍 Overview
+## Overview:
 
 This project was created for the **Applied Mathematics Challenge 2025** at the University of California, Merced. It tackles an ecological modeling problem posed by the Department of Wildlife: **predicting the bobcat population over the next 90 days** based on observed sightings of bobcats and their primary prey — cottontail rabbits.
 
@@ -8,26 +8,22 @@ The modeling is performed using a **Lotka-Volterra predator-prey system**, imple
 
 ---
 
-## 🔬 Background
+## Background:
 
 Bobcats are elusive creatures, and it's difficult to track their population accurately through direct observation. However, by analyzing the population trends of both bobcats and cottontail rabbits (their primary prey), we can estimate how their interactions impact population dynamics.
 
-### 🐾 Challenge Objective:
+### Challenge Objective:
 > Predict the bobcat population for the next **90 days** based on sparse observational data.  
 > If the population is projected to exceed **200**, wildlife control may be required.
 
 ---
 
-## 📈 Mathematical Model
+## Mathematical Model
 
-We used the **Lotka-Volterra equations**, a classic predator-prey system:
+We used the **Lotka-Volterra equations**, a classic predator-prey system [Link](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations):
 
-\[
-\\
-\\frac{dx}{dt} = ax - bxy \\\\
-\\frac{dy}{dt} = dxy - cy
-\\
-\]
+dx/dt = ax - bxy
+dy/dt = dxy - cy
 
 Where:
 - \( x(t) \): Rabbit population at time \( t \)
@@ -39,7 +35,7 @@ Where:
 
 ---
 
-## 🧮 Methodology
+## Methodology
 
 1. **Data Preprocessing**
    - Load observed sightings of rabbits and bobcats
@@ -57,6 +53,18 @@ Where:
 4. **Visualization**
    - Generate plots for original data, interpolated data, and population forecasts
 
----
+## Visualizations: 
 
-## 📁 Project Structure
+### 🐇 Rabbit Population Over Time
+![Rabbit Population](plots/rabbit_population_plot.png)
+
+### 🐾 Bobcat Population Over Time
+![Bobcat Population](plots/bobcat_population_plot.png)
+
+### 📈 Normalized Interpolated Populations
+![Interpolated Data](plots/interpolated_data.png)
+
+### 🔮 Predicted Populations (180-Day Forecast)
+![Full Prediction](plots/full_prediction.png)
+
+---
