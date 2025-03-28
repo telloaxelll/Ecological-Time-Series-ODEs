@@ -1,5 +1,6 @@
 """
-Author: AXEL MUNIZ TELLO, LEANDRO OUVERNY, RYAN HSIAO
+Author: AXEL MUNIZ TELLO
+CONTRIBUTORS: LEANDRO OUVERNY, RYAN HSIAO
 Date: 03/25/2025
 Description: This script simulates the population dynamics of bobcats and rabbits using the Lotka-Volterra model
              for the Applied Mathematics Challenge at UC Merced (2025).
@@ -17,12 +18,15 @@ import os
 # FUNCTION DEFINITIONS
 # =========================
 
+# This function defines the Lotka-Volterra ODE system for predator-prey dynamics
 def predator_prey(t, z, a, b, c, d):
     x, y = z
     dxdt = a * x - b * x * y
     dydt = d * x * y - c * y
     return [dxdt, dydt]
 
+# This function computes the loss function for the optimization process
+# It calcuates the mean squared error (MSE) between the observed and predicted populations
 def loss(params):
     a, b, c, d = params
     try:
@@ -106,8 +110,8 @@ plt.savefig("plots/interpolated_data.png")
 plt.close()
 
 # Fit model parameters
-initial_guess = [0.2, 0.4, 0.5, 0.]
-bounds = [(0, 5), (0, 0.1), (0, 5), (0, 0.1)]
+initial_guess = [0.2, 0.4, 0.5, 0.] # Parameter guesses for a, b, c, d cannot be 0, since a, b, c, d > 0 
+bounds = [(0, 5), (0, 0.1), (0, 5), (0, 0.1)] # Ensures parameters are positive and not negative 
 result = minimize(loss, initial_guess, bounds=bounds)
 
 a_fit, b_fit, c_fit, d_fit = result.x
@@ -141,6 +145,6 @@ plt.close()
 
 # Check for bobcat overpopulation (in normalized scale)
 if np.any(y_pred[90:] > 200 / np.max(y_interp)):
-    print("⚠️ Bobcat population exceeds 200 during the next 90 days!\n")
+    print("Bobcat population exceeds 200 during the next 90 days!\n")
 else:
-    print("✅ Bobcat population stays under control during the next 90 days.\n")
+    print("Bobcat population stays under control during the next 90 days.\n")
