@@ -2,7 +2,7 @@
 
 ## Overview:
 
-This project was created for the **Applied Mathematics Challenge 2025** at the University of California, Merced. It tackles an ecological modeling problem posed by the Department of Wildlife: **predicting the bobcat population over the next 90 days** based on observed sightings of bobcats and their primary prey — cottontail rabbits.
+This project was created for the **Applied Mathematics Challenge 2025** at the University of California, Merced. It tackles an ecological modeling problem posed by the Department of Wildlife: **predicting the bobcat population over the next 90 days** based on observed sightings of bobcats and their primary prey cottontail rabbits.
 
 The modeling is performed using a **Lotka-Volterra predator-prey system**, implemented as a system of ODEs. We use real data, interpolation, parameter estimation via optimization, and simulate future dynamics to determine whether **wildlife control measures** may be necessary.
 
